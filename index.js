@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Player = require("./player.js")
-const Question = require("./questions.js")
+require('dotenv').config();
+const Player = require("./player.js");
+const Question = require("./questions.js");
 
 app.use(express.json());
 let port = process.env.PORT || 3000;
+let uri = process.env.MONGODB_URI;
+let uriLocal = process.env.MONGODB_URI_LOCAL;
 
 
 app.get("/", function(req, res) {
@@ -13,12 +16,20 @@ app.get("/", function(req, res) {
 });
 
 
-mongoose.connect("mongodb://localhost:27017/KnowMoreDB", {
+mongoose.connect(uri, {
     useNewUrlParser: true },
-    function () {
-        console.log("Connected to database.");
-    }
+    function () {}
 );
+
+mongoose.connection.on("connected", function () {  
+    console.log("Connected to database.");
+});
+mongoose.connection.on("error", function (err) {  
+    console.log("No connection to the database. " + err);
+});
+mongoose.connection.on("disconnected", function () {  
+    console.log("Disconnecting from the database."); 
+});
 
 
 app.get("/players", async function(req, res) {

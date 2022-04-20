@@ -10,8 +10,9 @@ https://github.com/Mat16eusz/KnowMoreAPI-MongoDB.git
 2. Open the folder in terminal and install package:
 ```
 npm init
-npm install express mongoose
+npm install express mongoose dotenv
 ```
+3. Rename ``.env.example`` to ``.env`` and enter your MONGODB_URI in ``.env`` from your Atlas Dashboard under Databases.
 
 
 ## Contact
