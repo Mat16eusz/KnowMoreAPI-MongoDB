@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Player = require("./player.js")
+const Question = require("./questions.js")
 
 app.use(express.json());
 let port = process.env.PORT || 3000;
@@ -25,13 +26,19 @@ app.get("/players", async function(req, res) {
     res.status(200).json(players);
 });
 
+app.get("/questions", async function(req, res) {
+    const questions = await Question.find().exec();
+    res.status(200).json(questions);
+});
+
 app.post("/players", async function(req, res) {
     const player = new Player({
         idSocialMedia: req.body.idSocialMedia,
         firstName: req.body.firstName,
         surname: req.body.surname,
         name: req.body.name,
-        personPhoto: req.body.personPhoto
+        personPhoto: req.body.personPhoto,
+        token: req.body.token
     });
 
     try {

@@ -15,6 +15,9 @@ const playerSchema = new mongoose.Schema({
     },
     personPhoto: {
         type: String,
+    },
+    token: {
+        type: String,
     }
 
 }, {collection:"players"});
