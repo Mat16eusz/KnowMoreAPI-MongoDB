@@ -54,11 +54,22 @@ app.post("/players", async function(req, res) {
 
     try {
         await player.save();
-        res.status(200).json({"success": true, "message":"Player details saved."});
-
+        res.status(200).json({"success": true, "message": "Player details saved."});
     } catch (err) {
-        res.status(400).json({"success": false, "message":"Error in saving player details."});
+        res.status(400).json({"success": false, "message": "Error in saving player details."});
+        console.log("No player added.");
     }
+});
+
+app.put("/players/:id", async function(req, res) {
+    let conditions = { idSocialMedia: req.params.id };
+
+    Player.findOneAndUpdate(conditions, {token: req.body.token}).then(result => {
+        res.status(200).json({"success": true, "message": "Player details update."});
+    }).catch(err => {
+        res.status(500).json({"success": false, "message": "Error in updating player details."});
+        console.log("Data not updated - token. " + err);
+    });
 });
 
 app.all("*", (req, res) => {
