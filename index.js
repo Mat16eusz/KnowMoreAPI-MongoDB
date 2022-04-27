@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 const Player = require("./player.js");
 const Question = require("./questions.js");
+const Invitation = require("./invitations.js");
 
 app.use(express.json());
 let port = process.env.PORT || 3000;
@@ -24,8 +25,8 @@ mongoose.connect(uri, {
 mongoose.connection.on("connected", function () {  
     console.log("Connected to database.");
 });
-mongoose.connection.on("error", function (err) {  
-    console.log("No connection to the database. " + err);
+mongoose.connection.on("error", function (error) {  
+    console.log("No connection to the database. " + error);
 });
 mongoose.connection.on("disconnected", function () {  
     console.log("Disconnecting from the database."); 
@@ -42,6 +43,11 @@ app.get("/questions", async function(req, res) {
     res.status(200).json(questions);
 });
 
+app.get("/invitations", async function(req, res) {
+    const invitations = await Invitation.find().exec();
+    res.status(200).json(invitations);
+});
+
 app.post("/players", async function(req, res) {
     const player = new Player({
         idSocialMedia: req.body.idSocialMedia,
@@ -55,9 +61,25 @@ app.post("/players", async function(req, res) {
     try {
         await player.save();
         res.status(200).json({"success": true, "message": "Player details saved."});
-    } catch (err) {
-        res.status(400).json({"success": false, "message": "Error in saving player details."});
-        console.log("No player added.");
+    } catch (error) {
+        res.status(400).json({"success": false, "message": "Error in saving player details. Error: " + error});
+        console.log("No player added. Error: " + error);
+    }
+});
+
+app.post("/invitations", async function(req, res) {
+    const invitation = new Invitation({
+        idSocialMedia: req.body.idSocialMedia,
+        name: req.body.name,
+        personPhoto: req.body.personPhoto
+    });
+
+    try {
+        await invitation.save();
+        res.status(200).json({"success": true, "message": "Invitation details saved."});
+    } catch (error) {
+        res.status(400).json({"success": false, "message": "Error in saving invitation details. Error: " + error});
+        console.log("No invitation added. Error: " + error);
     }
 });
 
@@ -66,10 +88,21 @@ app.put("/players/:id", async function(req, res) {
 
     Player.findOneAndUpdate(conditions, {token: req.body.token}).then(result => {
         res.status(200).json({"success": true, "message": "Player details update."});
-    }).catch(err => {
-        res.status(500).json({"success": false, "message": "Error in updating player details."});
-        console.log("Data not updated - token. " + err);
+    }).catch(error => {
+        res.status(500).json({"success": false, "message": "Error in updating player details. Error: " + error});
+        console.log("Data not updated - token. Error: " + error);
     });
+});
+
+app.delete("/invitations/:id", async function(req, res) {
+    try {
+        const id = req.params.id;
+        await Invitation.findByIdAndDelete(id);
+        res.status(200).json({"success": true, "message": "Player invitations have been removed."});
+    } catch (error) {
+        res.status(400).json({"success": false, "message": "Error removing a player invite. Error: " + error});
+        console.log("Error removing a player invite. Error: " + error);
+    }
 });
 
 app.all("*", (req, res) => {
