@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const invitationsSchema = new mongoose.Schema({
+    myIdSocialMedia: {
+        type: String
+    },
     idSocialMedia: {
         type: String
     },

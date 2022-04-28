@@ -69,6 +69,7 @@ app.post("/players", async function(req, res) {
 
 app.post("/invitations", async function(req, res) {
     const invitation = new Invitation({
+        myIdSocialMedia: req.body.myIdSocialMedia,
         idSocialMedia: req.body.idSocialMedia,
         name: req.body.name,
         personPhoto: req.body.personPhoto
