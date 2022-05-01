@@ -5,6 +5,7 @@ require('dotenv').config();
 const Player = require("./player.js");
 const Question = require("./questions.js");
 const Invitation = require("./invitations.js");
+const CurrentQuestion = require("./currentQuestions.js");
 
 app.use(express.json());
 let port = process.env.PORT || 3000;
@@ -48,6 +49,11 @@ app.get("/invitations", async function(req, res) {
     res.status(200).json(invitations);
 });
 
+app.get("/currentQuestions", async function(req, res) {
+    const currentQuestions = await CurrentQuestion.find().exec();
+    res.status(200).json(currentQuestions);
+});
+
 app.post("/players", async function(req, res) {
     const player = new Player({
         idSocialMedia: req.body.idSocialMedia,
@@ -84,10 +90,135 @@ app.post("/invitations", async function(req, res) {
     }
 });
 
+app.post("/currentQuestions", async function(req, res) {
+    const currentQuestion = new CurrentQuestion({
+        myIdSocialMedia: req.body.myIdSocialMedia,
+        friendIdSocialMedia: req.body.friendIdSocialMedia,
+
+        myActiveTurn: req.body.myActiveTurn,
+        friendActiveTurn: req.body.friendActiveTurn,
+
+        selectedQuestions: req.body.selectedQuestions,
+
+
+        myIdQuestionOne: req.body.myIdQuestionOne,
+        myQuestionOneEN: req.body.myQuestionOneEN,
+        myAnswerOneEN: req.body.myAnswerOneEN,
+        myQuestionOnePL: req.body.myQuestionOnePL,
+        myAnswerOnePL: req.body.myAnswerOnePL,
+        myMarkedAnswerOne: req.body.myMarkedAnswerOne,
+
+        myIdQuestionTwo: req.body.myIdQuestionTwo,
+        myQuestionTwoEN: req.body.myQuestionTwoEN,
+        myAnswerTwoEN: req.body.myAnswerTwoEN,
+        myQuestionTwoPL: req.body.myQuestionTwoPL,
+        myAnswerTwoPL: req.body.myAnswerTwoPL,
+        myMarkedAnswerTwo: req.body.myMarkedAnswerTwo,
+
+        myIdQuestionThree: req.body.myIdQuestionThree,
+        myQuestionThreeEN: req.body.myQuestionThreeEN,
+        myAnswerThreeEN: req.body.myAnswerThreeEN,
+        myQuestionThreePL: req.body.myQuestionThreePL,
+        myAnswerThreePL: req.body.myAnswerThreePL,
+        myMarkedAnswerThree: req.body.myMarkedAnswerThree,
+
+
+        friendIdQuestionOne: req.body.friendIdQuestionOne,
+        friendQuestionOneEN: req.body.friendQuestionOneEN,
+        friendAnswerOneEN: req.body.friendAnswerOneEN,
+        friendQuestionOnePL: req.body.friendQuestionOnePL,
+        friendAnswerOnePL: req.body.friendAnswerOnePL,
+        friendMarkedAnswerOne: req.body.friendMarkedAnswerOne,
+
+        friendIdQuestionTwo: req.body.friendIdQuestionTwo,
+        friendQuestionTwoEN: req.body.friendQuestionTwoEN,
+        friendAnswerTwoEN: req.body.friendAnswerTwoEN,
+        friendQuestionTwoPL: req.body.friendQuestionTwoPL,
+        friendAnswerTwoPL: req.body.friendAnswerTwoPL,
+        friendMarkedAnswerTwo: req.body.friendMarkedAnswerTwo,
+
+        friendIdQuestionThree: req.body.friendIdQuestionThree,
+        friendQuestionThreeEN: req.body.friendQuestionThreeEN,
+        friendAnswerThreeEN: req.body.friendAnswerThreeEN,
+        friendQuestionThreePL: req.body.friendQuestionThreePL,
+        friendAnswerThreePL: req.body.friendAnswerThreePL,
+        friendMarkedAnswerThree: req.body.friendMarkedAnswerThree
+    });
+
+    try {
+        await currentQuestion.save();
+        res.status(200).json({"success": true, "message": "The player's questions have been saved."});
+    } catch (error) {
+        res.status(400).json({"success": false, "message": "Error in noting the player player's question. Error: " + error});
+        console.log("The player's question could not be saved. Error: " + error);
+    }
+});
+
 app.put("/players/:id", async function(req, res) {
     let conditions = { idSocialMedia: req.params.id };
 
     Player.findOneAndUpdate(conditions, {token: req.body.token}).then(result => {
+        res.status(200).json({"success": true, "message": "Player details update."});
+    }).catch(error => {
+        res.status(500).json({"success": false, "message": "Error in updating player details. Error: " + error});
+        console.log("Data not updated - token. Error: " + error);
+    });
+});
+
+app.put("/currentQuestions/:id", async function(req, res) {
+    let conditions = { myIdSocialMedia: req.params.id };
+
+    CurrentQuestion.findOneAndUpdate(conditions, {
+        $set:{
+            myActiveTurn: req.body.myActiveTurn,
+            friendActiveTurn: req.body.friendActiveTurn,
+
+            selectedQuestions: req.body.selectedQuestions,
+
+            myIdQuestionOne: req.body.myIdQuestionOne,
+            myQuestionOneEN: req.body.myQuestionOneEN,
+            myAnswerOneEN: req.body.myAnswerOneEN,
+            myQuestionOnePL: req.body.myQuestionOnePL,
+            myAnswerOnePL: req.body.myAnswerOnePL,
+            myMarkedAnswerOne: req.body.myMarkedAnswerOne,
+
+            myIdQuestionTwo: req.body.myIdQuestionTwo,
+            myQuestionTwoEN: req.body.myQuestionTwoEN,
+            myAnswerTwoEN: req.body.myAnswerTwoEN,
+            myQuestionTwoPL: req.body.myQuestionTwoPL,
+            myAnswerTwoPL: req.body.myAnswerTwoPL,
+            myMarkedAnswerTwo: req.body.myMarkedAnswerTwo,
+
+            myIdQuestionThree: req.body.myIdQuestionThree,
+            myQuestionThreeEN: req.body.myQuestionThreeEN,
+            myAnswerThreeEN: req.body.myAnswerThreeEN,
+            myQuestionThreePL: req.body.myQuestionThreePL,
+            myAnswerThreePL: req.body.myAnswerThreePL,
+            myMarkedAnswerThree: req.body.myMarkedAnswerThree,
+
+
+            friendIdQuestionOne: req.body.friendIdQuestionOne,
+            friendQuestionOneEN: req.body.friendQuestionOneEN,
+            friendAnswerOneEN: req.body.friendAnswerOneEN,
+            friendQuestionOnePL: req.body.friendQuestionOnePL,
+            friendAnswerOnePL: req.body.friendAnswerOnePL,
+            friendMarkedAnswerOne: req.body.friendMarkedAnswerOne,
+
+            friendIdQuestionTwo: req.body.friendIdQuestionTwo,
+            friendQuestionTwoEN: req.body.friendQuestionTwoEN,
+            friendAnswerTwoEN: req.body.friendAnswerTwoEN,
+            friendQuestionTwoPL: req.body.friendQuestionTwoPL,
+            friendAnswerTwoPL: req.body.friendAnswerTwoPL,
+            friendMarkedAnswerTwo: req.body.friendMarkedAnswerTwo,
+
+            friendIdQuestionThree: req.body.friendIdQuestionThree,
+            friendQuestionThreeEN: req.body.friendQuestionThreeEN,
+            friendAnswerThreeEN: req.body.friendAnswerThreeEN,
+            friendQuestionThreePL: req.body.friendQuestionThreePL,
+            friendAnswerThreePL: req.body.friendAnswerThreePL,
+            friendMarkedAnswerThree: req.body.friendMarkedAnswerThree
+        }
+    }).then(result => {
         res.status(200).json({"success": true, "message": "Player details update."});
     }).catch(error => {
         res.status(500).json({"success": false, "message": "Error in updating player details. Error: " + error});
