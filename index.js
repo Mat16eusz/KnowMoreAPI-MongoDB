@@ -95,8 +95,8 @@ app.post("/currentQuestions", async function(req, res) {
         myIdSocialMedia: req.body.myIdSocialMedia,
         friendIdSocialMedia: req.body.friendIdSocialMedia,
 
-        myActiveTurn: req.body.myActiveTurn,
-        friendActiveTurn: req.body.friendActiveTurn,
+        whoseTurn: req.body.whoseTurn,
+        gameProper: req.body.gameProper,
 
         selectedQuestions: req.body.selectedQuestions,
 
@@ -107,6 +107,7 @@ app.post("/currentQuestions", async function(req, res) {
         myQuestionOnePL: req.body.myQuestionOnePL,
         myAnswerOnePL: req.body.myAnswerOnePL,
         myMarkedAnswerOne: req.body.myMarkedAnswerOne,
+        myFriendMarkedAnswerOne: req.body.myFriendMarkedAnswerOne,
 
         myIdQuestionTwo: req.body.myIdQuestionTwo,
         myQuestionTwoEN: req.body.myQuestionTwoEN,
@@ -114,6 +115,7 @@ app.post("/currentQuestions", async function(req, res) {
         myQuestionTwoPL: req.body.myQuestionTwoPL,
         myAnswerTwoPL: req.body.myAnswerTwoPL,
         myMarkedAnswerTwo: req.body.myMarkedAnswerTwo,
+        myFriendMarkedAnswerTwo: req.body.myFriendMarkedAnswerTwo,
 
         myIdQuestionThree: req.body.myIdQuestionThree,
         myQuestionThreeEN: req.body.myQuestionThreeEN,
@@ -121,6 +123,7 @@ app.post("/currentQuestions", async function(req, res) {
         myQuestionThreePL: req.body.myQuestionThreePL,
         myAnswerThreePL: req.body.myAnswerThreePL,
         myMarkedAnswerThree: req.body.myMarkedAnswerThree,
+        myFriendMarkedAnswerThree: req.body.myFriendMarkedAnswerThree,
 
 
         friendIdQuestionOne: req.body.friendIdQuestionOne,
@@ -166,12 +169,12 @@ app.put("/players/:id", async function(req, res) {
 });
 
 app.put("/currentQuestions/:id", async function(req, res) {
-    let conditions = { myIdSocialMedia: req.params.id };
+    let conditions = { _id: req.params.id };
 
     CurrentQuestion.findOneAndUpdate(conditions, {
         $set:{
-            myActiveTurn: req.body.myActiveTurn,
-            friendActiveTurn: req.body.friendActiveTurn,
+            whoseTurn: req.body.whoseTurn,
+            gameProper: req.body.gameProper,
 
             selectedQuestions: req.body.selectedQuestions,
 
@@ -181,6 +184,7 @@ app.put("/currentQuestions/:id", async function(req, res) {
             myQuestionOnePL: req.body.myQuestionOnePL,
             myAnswerOnePL: req.body.myAnswerOnePL,
             myMarkedAnswerOne: req.body.myMarkedAnswerOne,
+            myFriendMarkedAnswerOne: req.body.myFriendMarkedAnswerOne,
 
             myIdQuestionTwo: req.body.myIdQuestionTwo,
             myQuestionTwoEN: req.body.myQuestionTwoEN,
@@ -188,6 +192,7 @@ app.put("/currentQuestions/:id", async function(req, res) {
             myQuestionTwoPL: req.body.myQuestionTwoPL,
             myAnswerTwoPL: req.body.myAnswerTwoPL,
             myMarkedAnswerTwo: req.body.myMarkedAnswerTwo,
+            myFriendMarkedAnswerTwo: req.body.myFriendMarkedAnswerTwo,
 
             myIdQuestionThree: req.body.myIdQuestionThree,
             myQuestionThreeEN: req.body.myQuestionThreeEN,
@@ -195,6 +200,7 @@ app.put("/currentQuestions/:id", async function(req, res) {
             myQuestionThreePL: req.body.myQuestionThreePL,
             myAnswerThreePL: req.body.myAnswerThreePL,
             myMarkedAnswerThree: req.body.myMarkedAnswerThree,
+            myFriendMarkedAnswerThree: req.body.myFriendMarkedAnswerThree,
 
 
             friendIdQuestionOne: req.body.friendIdQuestionOne,

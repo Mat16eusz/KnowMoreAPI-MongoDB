@@ -8,15 +8,15 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
 
-    myActiveTurn: {
-        type: Boolean
+    whoseTurn: {
+        type: String
     },
-    friendActiveTurn: {
+    gameProper: {
         type: Boolean
     },
 
     selectedQuestions: {
-        type: [Number]
+        type: [String]
     },
 
 
@@ -27,15 +27,18 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
     myAnswerOneEN: {
-        type: String
+        type: [String]
     },
     myQuestionOnePL: {
         type: String
     },
     myAnswerOnePL: {
-        type: String
+        type: [String]
     },
     myMarkedAnswerOne: {
+        type: Number
+    },
+    myFriendMarkedAnswerOne: {
         type: Number
     },
 
@@ -46,15 +49,18 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
     myAnswerTwoEN: {
-        type: String
+        type: [String]
     },
     myQuestionTwoPL: {
         type: String
     },
     myAnswerTwoPL: {
-        type: String
+        type: [String]
     },
     myMarkedAnswerTwo: {
+        type: Number
+    },
+    myFriendMarkedAnswerTwo: {
         type: Number
     },
 
@@ -65,15 +71,18 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
     myAnswerThreeEN: {
-        type: String
+        type: [String]
     },
     myQuestionThreePL: {
         type: String
     },
     myAnswerThreePL: {
-        type: String
+        type: [String]
     },
     myMarkedAnswerThree: {
+        type: Number
+    },
+    myFriendMarkedAnswerThree: {
         type: Number
     },
 
@@ -85,13 +94,13 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
     friendAnswerOneEN: {
-        type: String
+        type: [String]
     },
     friendQuestionOnePL: {
         type: String
     },
     friendAnswerOnePL: {
-        type: String
+        type: [String]
     },
     friendMarkedAnswerOne: {
         type: Number
@@ -104,13 +113,13 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
     friendAnswerTwoEN: {
-        type: String
+        type: [String]
     },
     friendQuestionTwoPL: {
         type: String
     },
     friendAnswerTwoPL: {
-        type: String
+        type: [String]
     },
     friendMarkedAnswerTwo: {
         type: Number
@@ -123,13 +132,13 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
     friendAnswerThreeEN: {
-        type: String
+        type: [String]
     },
     friendQuestionThreePL: {
         type: String
     },
     friendAnswerThreePL: {
-        type: String
+        type: [String]
     },
     friendMarkedAnswerThree: {
         type: Number
