@@ -95,6 +95,7 @@ app.post("/currentQuestions", async function(req, res) {
         myIdSocialMedia: req.body.myIdSocialMedia,
         friendIdSocialMedia: req.body.friendIdSocialMedia,
 
+        initializationGame: req.body.initializationGame,
         whoseTurn: req.body.whoseTurn,
         gameProper: req.body.gameProper,
 
@@ -173,6 +174,9 @@ app.put("/currentQuestions/:id", async function(req, res) {
 
     CurrentQuestion.findOneAndUpdate(conditions, {
         $set:{
+            myIdSocialMedia: req.body.myIdSocialMedia,
+            friendIdSocialMedia: req.body.friendIdSocialMedia,
+
             whoseTurn: req.body.whoseTurn,
             gameProper: req.body.gameProper,
 

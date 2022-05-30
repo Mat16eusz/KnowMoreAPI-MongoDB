@@ -8,6 +8,10 @@ const currentQuestionsSchema = new mongoose.Schema({
         type: String
     },
 
+
+    initializationGame: {
+        type: String
+    },
     whoseTurn: {
         type: String
     },
